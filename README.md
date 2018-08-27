@@ -84,6 +84,10 @@ chrome.storage.sync.get({
 });
 ```
 
+### License
+This extension uses LAME MP3 encoder, licensed LGPL.
+Everything else is under the MIT License.
+
 ### Future Work
 
 - [ ] Ability to cut parts of the audio off before saving
