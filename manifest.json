@@ -19,7 +19,6 @@
     "persistent": true
   },
   "permissions": [
-    "tabs",
     "tabCapture",
     "downloads",
     "storage"
