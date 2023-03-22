@@ -123,4 +123,5 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.tabs.create({url: "https://chrome.google.com/webstore/detail/chrome-audio-capture/kfokdmfpdnokpmpbjhjbcabgligoelgp/reviews"});
   }
 
+
 })
