@@ -6,10 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const status = document.getElementById('status');
   const doctorSpeak = document.getElementById('doctorSpeak')
   const transcriptionResult = document.getElementById('transcriptionResult')
-  const OPENAI_API_KEY = process.env.OPENAI_API_KEY
+  const copyButton = document.getElementById('copy-button');
+  const OPENAI_API_KEY = "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"
+
   let format;
   let audioURL;
   let encoding = false;
+
   async function getTranscription(file) {
     const formData = new FormData();
     formData.append("file", file);
@@ -32,8 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error("Error fetching transcription:", error);
     }
   }
+
   async function getDoctorSpeak(translation) {
-    const prompt = `The following is a transcription of a conversation between a physician and a patient. Document the facts of the case in appropriate medical terms. Do not add additional notes that were not explicitly discussed: \n${translation}`;
+    const prompt = `The following is a text transcription of a conversation between a physician and a patient. \n Document the facts of the transcription using appropriate medical terms. \n Do not add additional notes that were not explicitly discussed, be very concise. Do not be creative at all. Here is the text transcription: \n${translation}`;
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -42,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       body: JSON.stringify({
         messages: [{'role': 'user', 'content': `${prompt}`}],
-        model: 'gpt-4',
+        model: 'gpt-3.5-turbo',
         temperature: 0,
         max_tokens: 200
       }),
@@ -53,6 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
     return medicalDocumentation
   }
 
+  async function copyToClipboard (medicalDocumentation) {
+    copyButton.addEventListener('click', () => {
+    navigator.clipboard.writeText(medicalDocumentation)
+      .then(() => console.log('Copied to clipboard'))
+      .catch(err => console.error('Failed to copy to clipboard:', err));
+    });
+  }
 
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if(request.type === "createTab") {
