@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const status = document.getElementById('status');
   const doctorSpeak = document.getElementById('doctorSpeak')
   const transcriptionResult = document.getElementById('transcriptionResult')
-  const OPENAI_API_KEY = process.env.OPENAI_API_KEY
+  const OPENAI_API_KEY = "KEY"
   let format;
   let audioURL;
   let encoding = false;
@@ -25,15 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const data = await response.json();
-      console.log(data.text)
-      transcriptionResult.innerHTML = `Transcription: ${data.text}`;
-      return data.text
+      const transcription = data.text
+      transcriptionResult.innerHTML = `Transcription: ${transcription}`;
+      return transcription
     } catch (error) {
       console.error("Error fetching transcription:", error);
     }
   }
-  async function getDoctorSpeak(translation) {
-    const prompt = `The following is a transcription of a conversation between a physician and a patient. Document the facts of the case in appropriate medical terms. Do not add additional notes that were not explicitly discussed: \n${translation}`;
+  async function getDoctorSpeak(transcription) {
+    const prompt = `The following is a transcription of a conversation between a physician and a patient. Document the facts of the case in appropriate medical terms. Do not add additional notes that were not explicitly discussed. Answer as if this is the OpenAI Playground.: \n${transcription}`;
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       body: JSON.stringify({
         messages: [{'role': 'user', 'content': `${prompt}`}],
-        model: 'gpt-4',
+        model: 'gpt-4-0314',
         temperature: 0,
         max_tokens: 200
       }),
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const file = new File([blob], `${currentDate}.${format}`, { type: blob.type });
   
         // Call the API and display the transcription result
-        transcription = getTranscription(file);
+        transcription = await getTranscription(file);
         getDoctorSpeak(transcription)
   
         // Download the file
