@@ -108,9 +108,5 @@ document.addEventListener('DOMContentLoaded', () => {
       };
     }
   });
-  review.onclick = () => {
-    chrome.tabs.create({url: "https://chrome.google.com/webstore/detail/chrome-audio-capture/kfokdmfpdnokpmpbjhjbcabgligoelgp/reviews"});
-  }
-
 
 })

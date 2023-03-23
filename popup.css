@@ -110,3 +110,42 @@ ul li {
   white-space: pre;
   text-align: center;
 }
+
+#progressContainer {
+  margin-left: 5px;
+  width: 500px;
+  height: 18px;
+  background-color: grey;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#encodeProgress {
+  height: 100%;
+  width: 0%;
+  border-radius: 10px;
+  background-color: green;
+  transition: width 0.5s ease;
+}
+
+#status2 {
+  margin-top: 30px;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+.buttonContainer2 {
+  display: flex;
+}
+
+.button2 {
+  display: none;
+  text-align: center;
+  padding: 10px;
+  border: 2px #F5DEB3;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #568ff4;
+  border-radius: 5px;
+}

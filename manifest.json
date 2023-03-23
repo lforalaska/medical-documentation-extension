@@ -13,7 +13,6 @@
     "default_popup": "popup.html",
     "default_title": "Open Chrome Audio Capture interface"
   },
-  "options_page": "options.html",
   "background": {
     "scripts": ["background.js", "worker.js"],
     "persistent": true
