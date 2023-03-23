@@ -1,9 +1,27 @@
+@font-face {
+  font-family: 'Comfortaa';
+  src: url('fonts/Comfortaa-Regular.ttf') format('truetype'),
+       url('fonts/Comfortaa-Bold.ttf') format('truetype'),
+       url('fonts/Comfortaa-Medium.ttf') format('truetype');
+       url('fonts/Comfortaa-SemiBold.ttf') format('truetype');
+       url('fonts/Comfortaa-Light.ttf') format('truetype');
+
+  font-weight: normal;
+  font-style: normal;
+}
+
 .header {
   display: flex;
   align-items: center;
   padding-bottom: 15px;
-  padding-left: 20px;
-  border-bottom: 2px solid darkred;
+  border-bottom: 2px solid black;
+  white-space: nowrap;
+}
+
+.header img {
+  height: 84px;
+  margin: 0 20px 0 0;
+}
 }
 
 .header-title {
@@ -24,13 +42,17 @@
   margin-left: 5px;
   width: 500px;
   height: 18px;
-  background-color: lavenderblush;
+  background-color: grey;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 #encodeProgress {
   height: 100%;
   width: 0%;
-  background-color: darkred;
+  border-radius: 10px;
+  background-color: green;
+  transition: width 0.5s ease;
 }
 
 #saveCapture {
@@ -48,19 +70,20 @@
 }
 
 .button {
+  display: none;
+  text-align: center;
   padding: 10px;
-  border: 2px solid darkred;
+  border: 2px #F5DEB3;
   font-size: 16px;
-  background-color: lavenderblush;
   font-weight: bold;
-  margin: 10px 20px;
   cursor: pointer;
+  background-color: #568ff4;
   border-radius: 5px;
 }
 
 .button:hover {
-  color: red;
-  background-color: darkred;
+  color: white;
+  background-color: green;
 }
 
 #review {

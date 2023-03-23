@@ -1,9 +1,28 @@
+@font-face {
+  font-family: 'Comfortaa';
+  src: url('fonts/Comfortaa-Regular.ttf') format('truetype'),
+       url('fonts/Comfortaa-Bold.ttf') format('truetype'),
+       url('fonts/Comfortaa-Medium.ttf') format('truetype');
+       url('fonts/Comfortaa-SemiBold.ttf') format('truetype');
+       url('fonts/Comfortaa-Light.ttf') format('truetype');
+
+  font-weight: normal;
+  font-style: normal;
+}
+
 body, h2 {
-  font-family: Ubuntu, sans-serif;
+  font-family: 'Comfortaa', serif;
+  color: white;
 }
 
 body {
   margin: 10px 15px 5px 15px;
+  background: #1b1b23;
+}
+
+h1 {
+  text-align: center;
+  margin-left: 75px;
 }
 
 #status, #timeRem {
@@ -17,12 +36,12 @@ body {
   display: flex;
   align-items: center;
   padding-bottom: 15px;
-  border-bottom: 2px solid darkred;
+  border-bottom: 2px solid black;
   white-space: nowrap;
 }
 
 .header img {
-  height: 64px;
+  height: 84px;
   margin: 0 20px 0 0;
 }
 
@@ -31,17 +50,21 @@ ul {
   font-weight: bold;
   list-style: none;
   padding: 0;
+  text-align: center;
+  padding-top: 10px;
 }
 
-li {
-  font-size: 14px;
+ul li {
+  font-size: 12px;
   font-weight: normal;
   white-space: nowrap;
-  margin: 0 0 0 5px;
+  margin: 10px 0 0 5px;
+  display: block;
+  text-align: left;
 }
 
 .extra {
-  font-family: sans-serif;
+  font-family: 'Comfortaa', serif;
   white-space: nowrap;
   font-style: italic;
   margin: 3px;
@@ -51,11 +74,10 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: sans-serif;
 }
 
 .links p {
-  color: blue;
+  color: lightblue;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -69,21 +91,22 @@ li {
   display: none;
   text-align: center;
   padding: 10px;
-  border: 2px solid darkred;
+  border: 2px #F5DEB3;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  background-color: lavenderblush;
+  background-color: #568ff4;
   border-radius: 5px;
 }
 
 .button:hover {
-  color: red;
-  background-color: darkred;
+  color: white;
+  background-color: green;
 }
 
 .notes {
   padding: 10px;
   font-size: 12px;
   white-space: pre;
+  text-align: center;
 }
