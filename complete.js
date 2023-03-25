@@ -1,3 +1,4 @@
+/*
 document.addEventListener('DOMContentLoaded', () => {
   const encodeProgress = document.getElementById('encodeProgress');
   const saveButton = document.getElementById('saveCapture');
@@ -6,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const status = document.getElementById('status');
   const doctorSpeak = document.getElementById('doctorSpeak')
   const transcriptionResult = document.getElementById('transcriptionResult')
-  const OPENAI_API_KEY = ""
+  const OPENAI_API_KEY = "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"
   let format;
   let audioURL;
   let encoding = false;
@@ -110,3 +111,4 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 })
+*/

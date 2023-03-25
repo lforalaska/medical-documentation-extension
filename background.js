@@ -205,14 +205,17 @@ const audioCapture = (timeLimit, muteTab, format, quality, limitRemoved) => {
     chrome.runtime.onMessage.addListener(onStopClick);
     mediaRecorder.onComplete = (recorder, blob) => {
       audioURL = window.URL.createObjectURL(blob);
+      console.log("audioURL:", audioURL);
+      console.log("tabID", completeTabID)
       if(completeTabID) {
-        chrome.tabs.sendMessage(completeTabID, {type: "encodingComplete", audioURL});
+        chrome.runtime.sendMessage({type: "encodingComplete", audioURL});
       }
       mediaRecorder = null;
     }
+
     mediaRecorder.onEncodingProgress = (recorder, progress) => {
       if(completeTabID) {
-        chrome.tabs.sendMessage(completeTabID, {type: "encodingProgress", progress: progress});
+        chrome.runtime.sendMessage({type: "encodingProgress", progress: progress});
       }
     }
 
@@ -223,7 +226,8 @@ const audioCapture = (timeLimit, muteTab, format, quality, limitRemoved) => {
         endTabId = tabs[0].id;
         if(mediaRecorder && startTabId === endTabId){
           mediaRecorder.finishRecording();
-          chrome.runtime.sendMessage({type: "captureCompleted", format: format, audioURL, startID: startTabId});
+          chrome.runtime.sendMessage({type: "captureComplete", format: format, audioURL: audioURL, startID: startTabId});
+          completeTabID = endTabId;
           closeStream(endTabId);
         }
       })
@@ -260,8 +264,6 @@ const audioCapture = (timeLimit, muteTab, format, quality, limitRemoved) => {
     }
   });
 }
-
-
 
 //sends reponses to and from the popup menu
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -307,3 +309,4 @@ chrome.commands.onCommand.addListener((command) => {
     startCapture();
   }
 });
+
