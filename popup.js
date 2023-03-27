@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   const status = document.getElementById("status2");
   const doctorSpeak = document.getElementById("doctorSpeak");
   const transcriptionResult = document.getElementById("transcriptionResult");
-  const OPENAI_API_KEY = "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";
+  const OPENAI_API_KEY = "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";
   let format;
   let audioURL;
   let encoding = false;
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${OPENAI_API_KEY}`,
+            "Authorization": `Bearer ${OPENAI_API_KEY}`,
           },
           body: formData,
         }
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        "Authorization": `Bearer ${OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
         messages: [{ role: "user", content: `${prompt}` }],
@@ -207,7 +207,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
     return medicalDocumentation;
   }
 
-  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  async function getFileFromURL(url) {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const currentDate = new Date(Date.now()).toDateString();
+    const file = new File([blob], `${currentDate}.${format}`, {
+      type: blob.type,
+    });
+    return file
+  }
+
+  chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     if (request.type === "captureComplete") {
       format = request.format;
       let startID = request.startID;
@@ -225,6 +235,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         generateSave(request.audioURL);
 
         // Call the getTranscription and getDoctorSpeak functions
+        // Problem here is request.audioURL is not a file. Need to pass in an .mp3
         getTranscription(request.audioURL).then((transcription) => {
           getDoctorSpeak(transcription);
           console.log("functions", "functions success");
@@ -238,12 +249,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
     if (request.type === "encodingComplete") {
       console.log("encodingComplete", "ENCODING COMPLETE RECEIVED");
       encoding = false;
+      const file = await getFileFromURL(request.audioURL)
       status2.innerHTML = "File is ready!";
       encodeProgress.style.width = "100%";
       generateSave(request.audioURL);
-
       // Call the getTranscription and getDoctorSpeak functions
-      getTranscription(request.audioURL).then((transcription) => {
+      getTranscription(file).then((transcription) => {
         getDoctorSpeak(transcription);
         console.log("transcription and notes", "generated");
       });
@@ -271,10 +282,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         const file = new File([blob], `${currentDate}.${format}`, {
           type: blob.type,
         });
-
-        // Call the API and display the transcription result
-        transcription = await getTranscription(file);
-        getDoctorSpeak(transcription);
 
         // Download the file
         chrome.downloads.download({
