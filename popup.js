@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   const status = document.getElementById("status2");
   const doctorSpeak = document.getElementById("doctorSpeak");
   const transcriptionResult = document.getElementById("transcriptionResult");
-  const OPENAI_API_KEY = process.env.API_KEY;
+  const OPENAI_API_KEY = "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";
   let format;
   let audioURL;
   let encoding = false;
